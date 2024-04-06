@@ -3,9 +3,29 @@ variable "resource_group_name" {
   description = "(Required) The name of the resource group the container app resides in."
 }
 
+variable "product" {
+  type        = string
+  description = "(Required) The name of product container app."
+}
+
+variable "company_short_code" {
+  type        = string
+  description = "(Required) The short code of the company."
+}
+
+variable "environment_name" {
+  type        = string
+  description = "(Required) The name of the environmnet the container app is in."
+}
+
 variable "location" {
-  type = string
+  type        = string
   description = "(Required) Specifies the location of the resource."
+}
+
+variable "container_registry_name" {
+  type        = string
+  description = "(Required) The name for the container registry"
 }
 
 variable "container_registry_login_server" {
@@ -14,7 +34,7 @@ variable "container_registry_login_server" {
 }
 
 variable "log_analytics_workspace_name" {
-  type = string
+  type        = string
   description = "(Required) Specifies the name of the log analytics workspace."
 }
 
@@ -90,7 +110,7 @@ variable "container_apps" {
         })))
       }))
 
-      azure_queue_scale_rules = list(object({
+      azure_queue_scale_rules = optional(list(object({
         name         = string
         queue_name   = string
         queue_length = number
@@ -98,9 +118,9 @@ variable "container_apps" {
           secret_name       = string
           trigger_parameter = string
         }))
-      }))
+      })))
 
-      custom_scale_rules = list(object({
+      custom_scale_rules = optional(list(object({
         name             = string
         custom_rule_type = string
         metadata         = map(string)
@@ -108,36 +128,37 @@ variable "container_apps" {
           secret_name       = string
           trigger_parameter = string
         }))
-      }))
+      })))
 
-      http_scale_rules = list(object({
+      http_scale_rules = optional(list(object({
         name                = string
         concurrent_requests = number
         authentication = optional(object({
           secret_name       = string
           trigger_parameter = string
         }))
-      }))
+      })))
 
-      tcp_scale_rules = list(object({
+      tcp_scale_rules = optional(list(object({
         name                = string
         concurrent_requests = number
         authentication = optional(object({
           secret_name       = string
           trigger_parameter = string
         }))
-      }))
+      })))
 
-      max_replicas = optional(number)
-      min_replicas = optional(number)
+      max_replicas = optional(number, 1)
+      min_replicas = optional(number, 0)
     })
+    ingress_enabled = optional(bool, false)
     ingress = optional(object({
-      external_enabled = optional(bool)
-      target_port      = optional(number)
-      transport        = optional(string)
+      external_enabled = optional(bool, true)
+      target_port      = optional(number, 80)
+      transport        = optional(string, "auto")
       traffic_weight = optional(object({
-        percentage      = optional(number)
-        latest_revision = optional(bool)
+        percentage      = optional(number, 100)
+        latest_revision = optional(bool, true)
       }))
     }))
     secrets = optional(list(object({

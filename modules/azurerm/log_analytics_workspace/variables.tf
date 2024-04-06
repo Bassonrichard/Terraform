@@ -52,8 +52,8 @@ variable "reservation_capacity_in_gb_per_day" {
   type        = number
   description = "(Optional) The reservation capacity in GB per day of the log analytics workspace. Default is 0."
 
-  nullable    = true
-  default = null
+  nullable = true
+  default  = null
 }
 
 variable "tags" {

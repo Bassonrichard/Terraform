@@ -1,8 +1,8 @@
 module "log_analytics_workspace" {
   source = "../log_analytics_workspace"
 
-  name = var.log_analytics_workspace_name
-  location = var.location
+  name                = "${company_short_code}-${var.product}-${var.environment_name}-container-apps-log"
+  location            = var.location
   resource_group_name = var.resource_group_name
 
   tags = var.tags
@@ -11,19 +11,19 @@ module "log_analytics_workspace" {
 module "user_assigned_identity" {
   source = "../user_assigned_identity"
 
-  name = "-container-apps-uaid"
+  name                = "${company_short_code}-${var.product}-${var.environment_name}-container-apps-uaid"
   resource_group_name = var.resource_group_name
-  location = var.location
+  location            = var.location
 
   tags = var.tags
-  
+
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
-  name                           = var.container_app_environment_name
-  location                       = var.location
-  resource_group_name            = var.resource_group_name
-  log_analytics_workspace_id     = module.log_analytics_workspace.id
+  name                       = "${company_short_code}-${var.product}-${var.environment_name}-ace"
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
+  log_analytics_workspace_id = module.log_analytics_workspace.id
 
   tags = var.tags
 }
@@ -32,7 +32,7 @@ resource "azurerm_container_app" "az_container_app" {
 
   for_each = var.container_apps
 
-  name                         = each.value.name
+  name                         = "${company_short_code}-${var.product}-${var.environment_name}-${each.value.name}-aca"
   container_app_environment_id = azurerm_container_app_environment.az_container_app_environment.id
   resource_group_name          = var.resource_group_name
   revision_mode                = each.value.revision_mode
@@ -43,10 +43,8 @@ resource "azurerm_container_app" "az_container_app" {
   }
 
   registry {
-    server               = each.value.registry.server
-    identity             = each.value.registry.identity
-    password_secret_name = each.value.registry.password_secret_name
-    username             = each.value.registry.username
+    server   = var.container_registry_login_server
+    identity = module.user_assigned_identity.id
   }
 
   template {
@@ -54,7 +52,7 @@ resource "azurerm_container_app" "az_container_app" {
       for_each = coalesce(each.value.template.containers, [])
       content {
         name   = container.value.name
-        image  = container.value.image
+        image  = "${var.container_registry_name}.azurecr.io/${each.value.image}:${each.value.tag}"
         cpu    = container.value.cpu
         memory = container.value.memory
 
@@ -220,7 +218,7 @@ resource "azurerm_container_app" "az_container_app" {
   }
 
   dynamic "ingress" {
-    for_each = each.value.ingress != null ? [each.value.ingress] : []
+    for_each = each.value.ingress_enabled ? [each.value.ingress] : []
     content {
       external_enabled = try(ingress.value.external_enabled, null)
       target_port      = try(ingress.value.target_port, null)
