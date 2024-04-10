@@ -49,6 +49,7 @@ variable "container_apps" {
       password_secret_name = optional(string)
       username             = optional(string)
     }))
+
     template = object({
       containers = list(object({
         name   = string
@@ -60,12 +61,14 @@ variable "container_apps" {
           value       = optional(string)
           secret_name = optional(string)
         })))
+
         liveness_probe = optional(list(object({
           failure_count_threshold = optional(number)
           header = optional(list(object({
             name  = optional(string)
             value = optional(string)
           })))
+
           host                             = optional(string)
           initial_delay                    = optional(number)
           interval_seconds                 = optional(number)
@@ -75,12 +78,14 @@ variable "container_apps" {
           timeout                          = optional(number)
           transport                        = optional(string)
         })))
+
         readiness_probe = optional(list(object({
           failure_count_threshold = optional(number)
           header = optional(list(object({
             name  = optional(string)
             value = optional(string)
           })))
+
           host                    = optional(string)
           interval_seconds        = optional(number)
           path                    = optional(string)
