@@ -33,11 +33,6 @@ variable "container_registry_login_server" {
   description = "(Required) The login server for the container registry"
 }
 
-variable "container_app_environment_name" {
-  type        = string
-  description = "(Required) Specifies the name of the container app environment."
-}
-
 variable "container_apps" {
   description = "(Required) Specifies the container apps in the managed environment."
   type = map(object({
