@@ -33,11 +33,6 @@ variable "container_registry_login_server" {
   description = "(Required) The login server for the container registry"
 }
 
-variable "log_analytics_workspace_name" {
-  type        = string
-  description = "(Required) Specifies the name of the log analytics workspace."
-}
-
 variable "container_app_environment_name" {
   type        = string
   description = "(Required) Specifies the name of the container app environment."
