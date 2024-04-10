@@ -3,7 +3,7 @@ variable "name" {
   description = "(Required) The name of the container registry."
 
   validation {
-    condition     = length(var.name) > 47 || length(var.name) < 5
+    condition     = length(var.name) < 47 || length(var.name) > 5
     error_message = "The name of the container registry must be between 5 and 47 characters in length."
   }
 }
@@ -25,7 +25,7 @@ variable "sku" {
   default = "Basic"
 
   validation {
-    condition     = !contains(var.sku, ["Basic", "Standard", "Premium"])
+    condition     = contains(var.sku, ["Basic", "Standard", "Premium"])
     error_message = "The sku value must be one of Basic, Standard, or Premium."
   }
 }
