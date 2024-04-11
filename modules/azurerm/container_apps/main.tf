@@ -20,6 +20,8 @@ module "user_assigned_identity" {
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
+  depends_on = [ module.log_analytics_workspace ]
+
   name                       = "${var.company_short_code}-${var.product}-${var.environment_name}-ace"
   location                   = var.location
   resource_group_name        = var.resource_group_name
@@ -29,6 +31,11 @@ resource "azurerm_container_app_environment" "az_container_app_environment" {
 }
 
 resource "azurerm_container_app" "az_container_app" {
+
+  depends_on = [ 
+    azurerm_container_app_environment.az_container_app_environment,
+    module.user_assigned_identity
+   ]
 
   for_each = var.container_apps
 
