@@ -49,6 +49,7 @@ variable "container_apps" {
       containers = list(object({
         name   = string
         image  = string
+        tag    = string
         cpu    = optional(number)
         memory = optional(string)
         env = optional(list(object({

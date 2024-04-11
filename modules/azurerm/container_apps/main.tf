@@ -52,7 +52,7 @@ resource "azurerm_container_app" "az_container_app" {
       for_each = coalesce(each.value.template.containers, [])
       content {
         name   = container.value.name
-        image  = "${var.container_registry_name}.azurecr.io/${each.value.image}:${each.value.tag}"
+        image  = "${var.container_registry_name}.azurecr.io/${container.value.image}:${container.value.tag}"
         cpu    = container.value.cpu
         memory = container.value.memory
 
