@@ -23,6 +23,7 @@ variable "product" {
   description = "(Optional) The name of product."
 
   nullable = true
+  default = null
 }
 
 variable "tags" {
