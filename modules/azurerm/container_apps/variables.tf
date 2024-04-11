@@ -33,16 +33,6 @@ variable "container_registry_login_server" {
   description = "(Required) The login server for the container registry"
 }
 
-variable "log_analytics_workspace_name" {
-  type        = string
-  description = "(Required) Specifies the name of the log analytics workspace."
-}
-
-variable "container_app_environment_name" {
-  type        = string
-  description = "(Required) Specifies the name of the container app environment."
-}
-
 variable "container_apps" {
   description = "(Required) Specifies the container apps in the managed environment."
   type = map(object({
@@ -54,6 +44,7 @@ variable "container_apps" {
       password_secret_name = optional(string)
       username             = optional(string)
     }))
+
     template = object({
       containers = list(object({
         name   = string
@@ -65,12 +56,14 @@ variable "container_apps" {
           value       = optional(string)
           secret_name = optional(string)
         })))
+
         liveness_probe = optional(list(object({
           failure_count_threshold = optional(number)
           header = optional(list(object({
             name  = optional(string)
             value = optional(string)
           })))
+
           host                             = optional(string)
           initial_delay                    = optional(number)
           interval_seconds                 = optional(number)
@@ -80,12 +73,14 @@ variable "container_apps" {
           timeout                          = optional(number)
           transport                        = optional(string)
         })))
+
         readiness_probe = optional(list(object({
           failure_count_threshold = optional(number)
           header = optional(list(object({
             name  = optional(string)
             value = optional(string)
           })))
+
           host                    = optional(string)
           interval_seconds        = optional(number)
           path                    = optional(string)
