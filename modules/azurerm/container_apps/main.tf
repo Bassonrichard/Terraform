@@ -20,13 +20,13 @@ module "user_assigned_identity" {
 }
 
 module "role_assignment" {
-  source = "../role_assignment"
+  source = "../role_assigment"
 
   depends_on = [ module.user_assigned_identity ]
 
   resource_scope_id       = data.azurerm_container_registry.container_registry.id
   role_definition_name    = "AcrPull"
-  user_assigned_identity_id = module.user_assigned_identity.id
+  user_assigned_identity_id = module.user_assigned_identity.principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
