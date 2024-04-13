@@ -19,6 +19,14 @@ module "user_assigned_identity" {
 
 }
 
+module "role_assignment" {
+  source = "../role_assignment"
+
+  resource_scope_id       = data.azurerm_container_registry.container_registry.id
+  role_definition_name    = "AcrPull"
+  user_assigned_identity_id = module.user_assigned_identity.id
+}
+
 resource "azurerm_container_app_environment" "az_container_app_environment" {
   depends_on = [ module.log_analytics_workspace ]
 

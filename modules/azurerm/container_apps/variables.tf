@@ -28,6 +28,11 @@ variable "container_registry_name" {
   description = "(Required) The name for the container registry"
 }
 
+variable "container_registry_resource_group_name" {
+  type        = string
+  description = "(Required) The name for the resource group container registry"
+}
+
 variable "container_registry_login_server" {
   type        = string
   description = "(Required) The login server for the container registry"
