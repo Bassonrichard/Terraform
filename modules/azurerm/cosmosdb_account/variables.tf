@@ -28,7 +28,7 @@ variable "cosmosdb_account" {
     user_assigned_identity = optional(string)
     offer_type             = optional(string, "Standard")
     kind                   = optional(string)
-    enable_free_tier       = optional(bool)
+    free_tier_enabled       = optional(bool)F
 
     is_virtual_network_filter_enabled = optional(bool)
 
