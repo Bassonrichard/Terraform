@@ -53,7 +53,7 @@ resource "azurerm_cosmosdb_account" "az_cosmosdb_account" {
   }
 
   capacity {
-    total_throughput_limit = var.cosmosdb.cosmosdb_free_tier ? 1000 : -1
+    total_throughput_limit = var.cosmosdb_account.cosmosdb_free_tier ? 1000 : -1
   }
 
   dynamic "backup" {
