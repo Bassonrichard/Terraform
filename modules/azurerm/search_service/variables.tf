@@ -24,3 +24,9 @@ variable "sku" {
         error_message = "The SKU must be either 'free', 'basic', 'standard', 'standard2', 'standard3', 'storage_optimized_l1', 'storage_optimized_l2'"
     }
 }
+
+variable "tags" {
+  description = "(Optional) Specifies the tags of the resource"
+  type        = map(any)
+  default     = {}
+}

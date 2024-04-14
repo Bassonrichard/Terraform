@@ -5,4 +5,6 @@ resource "azurerm_search_service" "search_service" {
   sku                 = var.sku
 
   authentication_failure_mode = "http403"
+
+  tags = var.tags
 }
