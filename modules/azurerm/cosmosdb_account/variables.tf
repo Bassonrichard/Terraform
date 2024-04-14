@@ -28,7 +28,7 @@ variable "cosmosdb_account" {
     user_assigned_identity = optional(string)
     offer_type             = optional(string, "Standard")
     kind                   = optional(string)
-    free_tier_enabled       = optional(bool)F
+    free_tier_enabled      = optional(bool)
 
     is_virtual_network_filter_enabled = optional(bool)
 
@@ -91,7 +91,7 @@ variable "cosmosdb_account" {
     })))
   })
 
-    description = "(Required) The Cosmos DB account to create."
+  description = "(Required) The Cosmos DB account to create."
 }
 
 variable "tags" {
