@@ -10,7 +10,7 @@ resource "azurerm_cosmosdb_account" "az_cosmosdb_account" {
   default_identity_type             = var.cosmosdb_account.user_assigned_identity == null ? null : join("=", ["UserAssignedIdentity", var.cosmosdb_account.user_assigned_identity])
   offer_type                        = var.cosmosdb_account.offer_type
   kind                              = var.cosmosdb_account.kind
-  free_tier_enabled                 = var.cosmosdb_account.enable_free_tier
+  free_tier_enabled                 = var.cosmosdb_account.free_tier_enabled
   is_virtual_network_filter_enabled = var.cosmosdb_account.is_virtual_network_filter_enabled
   ip_range_filter                   = join(",", var.cosmosdb_account.ip_range_filter)
 
