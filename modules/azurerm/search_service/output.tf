@@ -10,6 +10,6 @@ output "url" {
   value = "https://${azurerm_search_service.search_service.name}.search.windows.net"
 }
 
-output "query_keys" {
-  value = azurerm_search_service.search_service.query_keys
+output "query_key" {
+  value = azurerm_search_service.search_service.query_keys.0.key
 }
