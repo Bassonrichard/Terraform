@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "storage_account" {
 
 resource "azurerm_storage_container" "storage_container" {
 
-  for_each = var.storage_containers 
+  for_each = { for idx, container in var.storage_containers : idx => container }
 
   name                  = each.value.name
   storage_account_name  = azurerm_storage_account.storage_account.name
