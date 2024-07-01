@@ -4,3 +4,9 @@ output "primary_blob_connection_string" {
 
   sensitive = true
 }
+
+output "primary_blob_endpoint" {
+  value = azurerm_storage_account.storage_account.primary_blob_endpoint
+  description = "The primary blob endpoint of the storage account."
+  
+}
