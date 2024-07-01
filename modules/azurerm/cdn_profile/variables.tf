@@ -16,7 +16,7 @@ variable "location" {
 variable "origin" {
   type       = object({
     name                  = string
-    container_access_type = string
+    host_name = string
   })
 }
 
