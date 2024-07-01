@@ -10,3 +10,9 @@ output "primary_blob_endpoint" {
   description = "The primary blob endpoint of the storage account."
   
 }
+
+output "primary_blob_host" {
+  value = azurerm_storage_account.storage_account.primary_blob_host
+  description = "The primary blob host of the storage account."
+  
+}

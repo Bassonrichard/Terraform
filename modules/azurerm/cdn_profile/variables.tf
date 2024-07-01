@@ -14,8 +14,8 @@ variable "location" {
 }
 
 variable "origin" {
-  type       = object({
-    name                  = string
+  type = object({
+    name      = string
     host_name = string
   })
 }
@@ -35,7 +35,7 @@ variable "product" {
   description = "(Optional) The name of product."
 
   nullable = true
-  default = null
+  default  = null
 }
 
 variable "tags" {
