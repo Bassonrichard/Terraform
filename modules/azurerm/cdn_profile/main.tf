@@ -17,6 +17,7 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
+  origin_host_header = var.origin.host_name
   origin {
     name      = var.origin.name
     host_name = var.origin.host_name
