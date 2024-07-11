@@ -32,14 +32,14 @@ variable "database" {
     collation    = optional(string, "SQL_Latin1_General_CP1_CI_AS")
     license_type = optional(string, "LicenseIncluded")
     max_size_gb  = optional(number, 32)
-    sku_name     = optional(string, "GP_S_Gen5")
+    sku_name     = optional(string, "GP_S_Gen5_1")
   })
 
   default = {
     collation    = "SQL_Latin1_General_CP1_CI_AS"
     license_type = "LicenseIncluded"
     max_size_gb  = 32
-    sku_name     = "GP_S_Gen5"
+    sku_name     = "GP_S_Gen5_1"
   }
 }
 

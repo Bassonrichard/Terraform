@@ -1,5 +1,7 @@
 output "database_password" {
   value = random_password.password.result
+
+  sensitive = true
 }
 
 output "fully_qualified_domain_name" {
