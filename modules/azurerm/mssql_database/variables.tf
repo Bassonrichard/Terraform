@@ -19,11 +19,13 @@ variable "db_server" {
   type = object({
     version             = optional(string, "12.0")
     minimum_tls_version = optional(string, "1.2")
+    administrator_login = optional(string, "sa-admin")
   })
 
   default = {
     version             = "12.0"
     minimum_tls_version = "1.2"
+    administrator_login = "sa-admin"
   }
 }
 
