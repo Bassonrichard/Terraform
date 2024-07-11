@@ -5,7 +5,7 @@ output "id" {
 
 output "primary_sql_connection_string" {
   value = azurerm_cosmosdb_account.az_cosmosdb_account.primary_sql_connection_string
-  description = "The CosmosDB Account id."
+  description = "The CosmosDB connection string."
 }
 
 output "name" {
