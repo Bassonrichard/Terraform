@@ -21,13 +21,6 @@ resource "azurerm_mssql_server" "az_mssql_server" {
   minimum_tls_version          = var.db_server.minimum_tls_version
   administrator_login          = "${var.name_prefix}-SA"
   administrator_login_password = random_password.password.result
-
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [var.user_assigned_identity_id]
-  }
-
-  primary_user_assigned_identity_id = var.user_assigned_identity_id
 }
 
 resource "azurerm_mssql_database" "az_mssql_database" {

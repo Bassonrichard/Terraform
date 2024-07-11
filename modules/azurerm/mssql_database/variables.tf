@@ -9,12 +9,6 @@ variable "location" {
   description = "(Required) Specifies the location of the resource."
 }
 
-
-variable "user_assigned_identity_id" {
-  type        = string
-  description = "The ID of the user assigned identity to use for the database server"
-}
-
 variable "db_server" {
   type = object({
     version             = optional(string, "12.0")
