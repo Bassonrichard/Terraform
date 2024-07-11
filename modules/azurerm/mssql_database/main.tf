@@ -10,12 +10,11 @@ resource "random_password" "password" {
 resource "azurerm_mssql_server" "az_mssql_server" {
 
   depends_on = [
-    random_password.password,
-    azurerm_resource_group.database_rg
+    random_password.password
   ]
 
   name                         = "${var.name_prefix}-sqlserver"
-  resource_group_name          = "${var.name_prefix}-database-rg"
+  resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = var.db_server.version
   minimum_tls_version          = var.db_server.minimum_tls_version
