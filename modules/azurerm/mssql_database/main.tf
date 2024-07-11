@@ -17,6 +17,7 @@ resource "azurerm_mssql_server" "az_mssql_server" {
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = var.db_server.version
+  storage_account_type         = var.db_server.storage_account_type
   minimum_tls_version          = var.db_server.minimum_tls_version
   administrator_login          = var.db_server.administrator_login
   administrator_login_password = random_password.password.result
