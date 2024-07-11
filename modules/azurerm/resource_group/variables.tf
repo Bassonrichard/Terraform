@@ -1,3 +1,8 @@
+variable "name_prefix" {
+  type        = string
+  description = "(Required) The prefix to use for all resources."
+}
+
 variable "name" {
   type        = string
   description = "(Required) The name of the resource group."
@@ -6,11 +11,6 @@ variable "name" {
 variable "location" {
   type        = string
   description = "(Required) Specifies the location of the resource group."
-}
-
-variable "name_prefix" {
-  type        = string
-  description = "(Required) The prefix to use for all resources."
 }
 
 variable "tags" {
