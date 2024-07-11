@@ -29,7 +29,6 @@ resource "azurerm_mssql_database" "az_mssql_database" {
   name         = "${var.name_prefix}-db"
   server_id    = azurerm_mssql_server.az_mssql_server.id
   collation    = var.database.collation
-  license_type = var.database.license_type
   max_size_gb  = var.database.max_size_gb
   sku_name     = var.database.sku_name
 
