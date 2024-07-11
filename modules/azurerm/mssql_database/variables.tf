@@ -10,10 +10,10 @@ variable "location" {
 }
 
 variable "db_server" {
-  type = optional(object({
+  type = object({
     version             = optional(string, "12.0")
     minimum_tls_version = optional(string, "1.2")
-  }))
+  })
 
   default = {
     version             = "12.0"
@@ -22,12 +22,12 @@ variable "db_server" {
 }
 
 variable "database" {
-  type = optional(object({
+  type = object({
     collation    = optional(string, "SQL_Latin1_General_CP1_CI_AS")
     license_type = optional(string, "LicenseIncluded")
     max_size_gb  = optional(number, 32)
     sku_name     = optional(string, "GP_S_Gen5")
-  }))
+  })
 
   default = {
     collation    = "SQL_Latin1_General_CP1_CI_AS"
