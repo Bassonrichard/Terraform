@@ -26,12 +26,13 @@ resource "azurerm_mssql_database" "az_mssql_database" {
 
   depends_on = [azurerm_mssql_server.az_mssql_server]
 
-  name        = "${var.name_prefix}-db"
-  server_id   = azurerm_mssql_server.az_mssql_server.id
-  collation   = var.database.collation
-  max_size_gb = var.database.max_size_gb
-  sku_name    = var.database.sku_name
-  zone_redundant = var.database.zone_redundant
+  name                 = "${var.name_prefix}-db"
+  server_id            = azurerm_mssql_server.az_mssql_server.id
+  collation            = var.database.collation
+  max_size_gb          = var.database.max_size_gb
+  sku_name             = var.database.sku_name
+  zone_redundant       = var.database.zone_redundant
+  storage_account_type = var.database.storage_account_type
 
   tags = var.tags
 }
