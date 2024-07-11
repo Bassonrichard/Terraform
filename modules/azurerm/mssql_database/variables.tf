@@ -10,28 +10,31 @@ variable "location" {
 }
 
 variable "db_server" {
-  type = object({
+  type = optional(object({
     version             = optional(string, "12.0")
     minimum_tls_version = optional(string, "1.2")
-  })
+  }))
 
-  nullable = true
+  default = {
+    version             = "12.0"
+    minimum_tls_version = "1.2"
+  }
 }
 
 variable "database" {
-  type = object({
+  type = optional(object({
     collation    = optional(string, "SQL_Latin1_General_CP1_CI_AS")
     license_type = optional(string, "LicenseIncluded")
     max_size_gb  = optional(number, 32)
     sku_name     = optional(string, "GP_S_Gen5")
-  })
-}
-
-variable "firewall_rules" {
-  type = map(object({
-    start_ip_address = string
-    end_ip_address   = string
   }))
+
+  default = {
+    collation    = "SQL_Latin1_General_CP1_CI_AS"
+    license_type = "LicenseIncluded"
+    max_size_gb  = 32
+    sku_name     = "GP_S_Gen5"
+  }
 }
 
 variable "tags" {
