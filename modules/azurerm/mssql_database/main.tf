@@ -17,7 +17,6 @@ resource "azurerm_mssql_server" "az_mssql_server" {
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = var.db_server.version
-  zone_redundant               = var.db_server.zone_redundant
   minimum_tls_version          = var.db_server.minimum_tls_version
   administrator_login          = var.db_server.administrator_login
   administrator_login_password = random_password.password.result
@@ -32,6 +31,7 @@ resource "azurerm_mssql_database" "az_mssql_database" {
   collation   = var.database.collation
   max_size_gb = var.database.max_size_gb
   sku_name    = var.database.sku_name
+  zone_redundant = var.database.zone_redundant
 
   tags = var.tags
 }
