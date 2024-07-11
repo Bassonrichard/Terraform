@@ -1,5 +1,5 @@
 locals {
-  name = var.product == null ? "${var.company_short_code}-${var.environment_name}-${var.name}-cdn" : "${var.company_short_code}-${var.product}-${var.environment_name}-${var.name}-cdn"
+  name = "${var.name_prefix}-${var.name}-cdn"
 }
 
 

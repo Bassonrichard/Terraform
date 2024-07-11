@@ -8,22 +8,9 @@ variable "location" {
   description = "(Required) Specifies the location of the resource group."
 }
 
-variable "company_short_code" {
+variable "name_prefix" {
   type        = string
-  description = "(Required) The short code of the company."
-}
-
-variable "environment_name" {
-  type        = string
-  description = "(Required) The name of the environmnet the resource group resides in."
-}
-
-variable "product" {
-  type        = string
-  description = "(Optional) The name of product."
-
-  nullable = true
-  default = null
+  description = "(Required) The prefix to use for all resources."
 }
 
 variable "tags" {

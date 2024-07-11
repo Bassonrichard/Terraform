@@ -1,7 +1,7 @@
 module "log_analytics_workspace" {
   source = "../log_analytics_workspace"
 
-  name                = "${var.company_short_code}-${var.product}-${var.environment_name}-container-apps-log"
+  name                = "${var.name_prefix}-container-apps-log"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -11,7 +11,7 @@ module "log_analytics_workspace" {
 module "user_assigned_identity" {
   source = "../user_assigned_identity"
 
-  name                = "${var.company_short_code}-${var.product}-${var.environment_name}-container-apps-uaid"
+  name                = "${var.name_prefix}-container-apps-uaid"
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -32,7 +32,7 @@ module "role_assignment" {
 resource "azurerm_container_app_environment" "az_container_app_environment" {
   depends_on = [ module.log_analytics_workspace ]
 
-  name                       = "${var.company_short_code}-${var.product}-${var.environment_name}-ace"
+  name                       = "${var.name_prefix}-ace"
   location                   = var.location
   resource_group_name        = var.resource_group_name
   log_analytics_workspace_id = module.log_analytics_workspace.id
@@ -49,7 +49,7 @@ resource "azurerm_container_app" "az_container_app" {
 
   for_each = var.container_apps
 
-  name                         = "${var.company_short_code}-${var.product}-${var.environment_name}-${each.value.name}-aca"
+  name                         = "${var.name_prefix}-${each.value.name}-aca"
   container_app_environment_id = azurerm_container_app_environment.az_container_app_environment.id
   resource_group_name          = var.resource_group_name
   revision_mode                = each.value.revision_mode

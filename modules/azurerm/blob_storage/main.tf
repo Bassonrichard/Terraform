@@ -1,5 +1,5 @@
 locals {
-  name = var.product == null ? "${var.company_short_code}${var.environment_name}${var.name}sa" : "${var.company_short_code}${var.product}${var.environment_name}${var.name}sa"
+  name = "${var.name_prefix}${var.name}sa"
 }
 
 resource "azurerm_storage_account" "storage_account" {

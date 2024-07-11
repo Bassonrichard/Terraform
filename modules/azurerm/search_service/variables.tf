@@ -1,6 +1,12 @@
 variable "name" {
-    type        = string
-    description = "The name of the search service"
+  type        = string
+  description = "(Required) The name of the search service."
+  
+}
+
+variable "name_prefix" {
+  type        = string
+  description = "(Required) The prefix to use for all resources."
 }
 
 variable "resource_group_name" {

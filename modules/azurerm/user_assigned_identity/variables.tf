@@ -1,3 +1,8 @@
+variable "name_prefix" {
+  type        = string
+  description = "(Required) The prefix to use for all resources."
+}
+
 variable "name" {
   type        = string
   description = "(Required) Name of the identity."

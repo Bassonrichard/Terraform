@@ -3,19 +3,9 @@ variable "resource_group_name" {
   description = "(Required) The name of the resource group the container app resides in."
 }
 
-variable "product" {
+variable "name_prefix" {
   type        = string
-  description = "(Required) The name of product container app."
-}
-
-variable "company_short_code" {
-  type        = string
-  description = "(Required) The short code of the company."
-}
-
-variable "environment_name" {
-  type        = string
-  description = "(Required) The name of the environmnet the container app is in."
+  description = "(Required) The prefix to use for all resources."
 }
 
 variable "location" {

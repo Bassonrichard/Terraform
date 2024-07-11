@@ -3,6 +3,11 @@ variable "resource_group_name" {
   description = "(Required) The name of the resource group the blob storage resides in."
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "(Required) The prefix to use for all resources."
+}
+
 variable "name" {
   type        = string
   description = "(Required) The name of the blob storage."
@@ -18,24 +23,6 @@ variable "storage_containers" {
     name                  = string
     container_access_type = string
   }))
-}
-
-variable "company_short_code" {
-  type        = string
-  description = "(Required) The short code of the company."
-}
-
-variable "environment_name" {
-  type        = string
-  description = "(Required) The name of the environmnet the blob storage resides in."
-}
-
-variable "product" {
-  type        = string
-  description = "(Optional) The name of product."
-
-  nullable = true
-  default = null
 }
 
 variable "tags" {

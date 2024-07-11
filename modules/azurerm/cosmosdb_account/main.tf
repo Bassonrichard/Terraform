@@ -1,5 +1,5 @@
 locals {
-  cosmosdb_name = "${var.company_short_code}-${var.product}-${var.environment_name}-cosmosdb"
+  cosmosdb_name = "${var.name_prefix}-cosmosdb"
 }
 
 
