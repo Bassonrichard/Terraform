@@ -11,7 +11,8 @@ module "log_analytics_workspace" {
 module "user_assigned_identity" {
   source = "../user_assigned_identity"
 
-  name                = "${var.name_prefix}-container-apps-uaid"
+  name_prefix         = var.name_prefix
+  name                = "container-apps"
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -22,15 +23,15 @@ module "user_assigned_identity" {
 module "role_assignment" {
   source = "../role_assigment"
 
-  depends_on = [ module.user_assigned_identity ]
+  depends_on = [module.user_assigned_identity]
 
-  resource_scope_id       = data.azurerm_container_registry.container_registry.id
-  role_definition_name    = "AcrPull"
+  resource_scope_id         = data.azurerm_container_registry.container_registry.id
+  role_definition_name      = "AcrPull"
   user_assigned_identity_id = module.user_assigned_identity.principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
-  depends_on = [ module.log_analytics_workspace ]
+  depends_on = [module.log_analytics_workspace]
 
   name                       = "${var.name_prefix}-ace"
   location                   = var.location
@@ -42,10 +43,10 @@ resource "azurerm_container_app_environment" "az_container_app_environment" {
 
 resource "azurerm_container_app" "az_container_app" {
 
-  depends_on = [ 
+  depends_on = [
     azurerm_container_app_environment.az_container_app_environment,
     module.user_assigned_identity
-   ]
+  ]
 
   for_each = var.container_apps
 
