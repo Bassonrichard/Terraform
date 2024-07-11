@@ -4,6 +4,12 @@ variable "name_prefix" {
 
 }
 
+variable "resource_group_name" {
+  type        = string
+  description = "(Required) The name of the resource group in which to create the mssql database."
+}
+
+
 variable "location" {
   type        = string
   description = "(Required) Specifies the location of the resource."
