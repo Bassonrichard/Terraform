@@ -36,13 +36,4 @@ resource "azurerm_key_vault" "az_key_vault" {
       virtual_network_subnet_ids = network_acls.value.virtual_network_subnet_ids
     }
   }
-
-  dynamic "contact" {
-    for_each = var.contacts
-    content {
-      name  = contact.value.name
-      email = contact.value.email
-      phone = contact.value.phone
-    }
-  }
 }

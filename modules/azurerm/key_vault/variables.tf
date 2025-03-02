@@ -53,13 +53,3 @@ variable "network_acls" {
   description = "(Optional) List of network ACL configurations for the key vault."
   default = []
 }
-
-variable "contacts" {
-  type = list(object({
-    name  = string
-    email = string
-    phone = optional(string)
-  }))
-  description = "(Optional) List of contact objects for the key vault."
-  default = []
-}
