@@ -6,7 +6,7 @@ variable "zone_name" {
 variable "record" {
   type = object({
     name    = string
-    value   = string
+    content = string
     type    = string
     comment = optional(string)
     proxied = optional(bool, false)
