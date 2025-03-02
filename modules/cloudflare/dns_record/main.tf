@@ -5,7 +5,7 @@ resource "cloudflare_dns_record" "record" {
   type    = var.record.type
   comment = var.record.comment
   proxied = var.record.proxied 
-  ttl     = var.ttl 
+  ttl     = var.record.ttl 
 
 
   tags = var.record.tags
