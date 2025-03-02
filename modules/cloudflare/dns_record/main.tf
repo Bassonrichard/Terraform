@@ -4,7 +4,7 @@ resource "cloudflare_dns_record" "record" {
     data.cloudflare_zone.zone
   ]
 
-  zone_id = data.cloudflare_zone.zone.id
+  zone_id = data.cloudflare_zone.zone.zone_id
   name    = var.record.name
   content = var.record.content
   type    = var.record.type
