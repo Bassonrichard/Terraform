@@ -10,6 +10,7 @@ variable "record" {
     type    = string
     comment = optional(string)
     proxied = optional(bool, false)
+    ttl     = optional(number, 3600)
     tags    = optional(list(string))
   })
   description = "Details of the DNS record."
