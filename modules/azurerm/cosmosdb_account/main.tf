@@ -12,7 +12,7 @@ resource "azurerm_cosmosdb_account" "az_cosmosdb_account" {
   kind                              = var.cosmosdb_account.kind
   free_tier_enabled                 = var.cosmosdb_account.free_tier_enabled
   is_virtual_network_filter_enabled = var.cosmosdb_account.is_virtual_network_filter_enabled
-  ip_range_filter                   = join(",", var.cosmosdb_account.ip_range_filter)
+  ip_range_filter                   = var.cosmosdb_account.ip_range_filter
 
   dynamic "capabilities" {
     for_each = coalesce(var.cosmosdb_account.capabilities, [])
