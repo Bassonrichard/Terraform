@@ -1,4 +1,4 @@
-resource "cloudflare_record" "record" {
+resource "cloudflare_dns_record" "record" {
   zone_id = data.cloudflare_zone.zone.id
   name    = var.record.name
   content = var.record.content

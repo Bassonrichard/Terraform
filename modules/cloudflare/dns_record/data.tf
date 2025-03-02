@@ -1,3 +1,5 @@
 data "cloudflare_zone" "zone" {
-  name = var.zone_name
+  filter {
+    name = var.zone_name
+  }
 }

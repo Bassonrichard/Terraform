@@ -58,7 +58,7 @@ variable "contacts" {
   type = list(object({
     name  = string
     email = string
-    phone = string
+    phone = optional(string)
   }))
   description = "(Optional) List of contact objects for the key vault."
   default = []
