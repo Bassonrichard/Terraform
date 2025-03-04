@@ -10,6 +10,7 @@ resource "azurerm_key_vault" "az_key_vault" {
   enabled_for_disk_encryption = var.key_vault.enabled_for_disk_encryption
   soft_delete_retention_days  = var.key_vault.soft_delete_retention_days
   purge_protection_enabled    = var.key_vault.purge_protection_enabled
+  enable_rbac_authorization   = var.key_vault.enable_rbac_authorization
 
   sku_name                    = var.key_vault.sku_name
   

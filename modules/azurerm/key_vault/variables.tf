@@ -26,6 +26,7 @@ variable "key_vault" {
     soft_delete_retention_days  = number
     purge_protection_enabled    = bool
     sku_name                    = string
+    enable_rbac_authorization   = optional(bool, false)
   })
   description = "(Required) Key vault configuration variables."
 }
