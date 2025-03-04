@@ -21,4 +21,4 @@ output "principal_id"{
     length(container_app.identity) > 0 ? container_app.identity[0].principal_id: "Identity Not Enabled"
   }
   description = "The Principal ID of the Container App's identity. Returns 'Identity Not Enabled' if identity is not configured."
-}W
+}
