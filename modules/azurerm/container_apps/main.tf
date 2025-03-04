@@ -45,7 +45,6 @@ resource "azurerm_container_app" "az_container_app" {
 
   depends_on = [
     azurerm_container_app_environment.az_container_app_environment
-    module.acr_role_assignment
   ]
 
   for_each = var.container_apps
@@ -57,12 +56,12 @@ resource "azurerm_container_app" "az_container_app" {
 
   identity {
     type         = "SystemAssigned"
-    identity_ids = [module.user_assigned_identity.id]
   }
 
   registry {
     server   = var.container_registry_login_server
-    identity = module.user_assigned_identity.id
+    username = data.azurerm_container_registry.container_registry.admin_username
+    password_secret_name = "container-registry-password"
   }
 
   template {
@@ -249,8 +248,13 @@ resource "azurerm_container_app" "az_container_app" {
     }
   }
 
-  dynamic "secret" {
-    for_each = each.value.secrets != null ? each.value.secrets : []
+ dynamic "secret" {
+    for_each = merge(each.value.secrets, {
+      "container-registry-password" = {
+        name  = "container-registry-password"
+        value = data.azurerm_container_registry.container_registry.admin_password
+      }
+    })
     content {
       name  = secret.value.name
       value = try(secret.value.value, null)
