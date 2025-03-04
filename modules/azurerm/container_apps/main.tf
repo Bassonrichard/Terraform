@@ -44,7 +44,8 @@ resource "azurerm_container_app_environment" "az_container_app_environment" {
 resource "azurerm_container_app" "az_container_app" {
 
   depends_on = [
-    azurerm_container_app_environment.az_container_app_environment
+    azurerm_container_app_environment.az_container_app_environment,
+    data.azurerm_container_registry.container_registry
   ]
 
   for_each = var.container_apps
@@ -249,12 +250,10 @@ resource "azurerm_container_app" "az_container_app" {
   }
 
  dynamic "secret" {
-    for_each = merge(each.value.secrets, {
-      "container-registry-password" = {
+    for_each = concat(each.value.secrets != null ? each.value.secrets : [], [{
         name  = "container-registry-password"
         value = data.azurerm_container_registry.container_registry.admin_password
-      }
-    })
+      }])
     content {
       name  = secret.value.name
       value = try(secret.value.value, null)
