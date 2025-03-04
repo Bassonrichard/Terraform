@@ -21,7 +21,7 @@ module "user_assigned_identity" {
 }
 
 module "acr_role_assignment" {
-  source = "../role_assigment"
+  source = "../role_assignment"
 
   depends_on = [module.user_assigned_identity]
 
