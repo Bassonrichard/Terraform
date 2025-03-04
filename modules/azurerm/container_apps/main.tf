@@ -8,27 +8,6 @@ module "log_analytics_workspace" {
   tags = var.tags
 }
 
-module "user_assigned_identity" {
-  source = "../user_assigned_identity"
-
-  name_prefix         = var.name_prefix
-  name                = "container-apps"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-
-  tags = var.tags
-
-}
-
-module "role_assignment" {
-  source = "../role_assigment"
-
-  depends_on = [module.user_assigned_identity]
-
-  resource_scope_id         = data.azurerm_container_registry.container_registry.id
-  role_definition_name      = "AcrPull"
-  user_assigned_identity_id = module.user_assigned_identity.principal_id
-}
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
   depends_on = [module.log_analytics_workspace]
@@ -56,13 +35,11 @@ resource "azurerm_container_app" "az_container_app" {
   revision_mode                = each.value.revision_mode
 
   identity {
-    type         = "UserAssigned"
-    identity_ids = [module.user_assigned_identity.id]
+    type         = "SystemAssigned"
   }
 
   registry {
     server   = var.container_registry_login_server
-    identity = module.user_assigned_identity.id
   }
 
   template {
@@ -258,4 +235,15 @@ resource "azurerm_container_app" "az_container_app" {
   }
 
   tags = var.tags
+}
+
+
+module "role_assignment" {
+  source = "../role_assigment"
+
+  depends_on = [azurerm_container_app.az_container_app]
+
+  resource_scope_id         = data.azurerm_container_registry.container_registry.id
+  role_definition_name      = "AcrPull"
+  user_assigned_identity_id = azurerm_container_app.az_container_app.identity[0].principal_id
 }
