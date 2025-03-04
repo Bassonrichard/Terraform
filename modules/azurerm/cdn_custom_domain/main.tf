@@ -7,4 +7,10 @@ resource "azurerm_cdn_endpoint_custom_domain" "custom_domain" {
     certificate_type = "Dedicated"
     protocol_type = "ServerNameIndication"
   }
+
+  lifecycle {
+    ignore_changes = [
+      cdn_managed_https,
+    ]
+  }
 }
