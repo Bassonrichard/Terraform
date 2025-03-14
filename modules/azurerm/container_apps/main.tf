@@ -274,7 +274,7 @@ resource "azurerm_container_app" "az_container_app" {
     content {
       name                = secret.value.name
       value               = try(secret.value.value, null)
-      identity            = secret.value.key_vault_secret_id != null ? module.user_assigned_identity[each.key].principal_id : null
+      identity            = try(secret.value.key_vault_secret_id, null) != null ? module.user_assigned_identity[each.key].principal_id : null
       key_vault_secret_id = try(secret.value.key_vault_secret_id, null)
     }
   }
