@@ -263,9 +263,4 @@ resource "azurerm_container_app" "az_container_app" {
   tags = var.tags
 
 
-    lifecycle {
-    ignore_changes = [
-      template[0].container,
-    ]
-  }
 }
