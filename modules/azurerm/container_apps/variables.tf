@@ -13,19 +13,21 @@ variable "location" {
   description = "(Required) Specifies the location of the resource."
 }
 
-variable "container_registry_name" {
-  type        = string
-  description = "(Required) The name for the container registry"
+variable "container_registry" {
+  type = object({
+    name                = string
+    resource_group_name = string
+    login_server        = string
+  })
+
+   description = "(Required) The container registry details"
 }
 
-variable "container_registry_resource_group_name" {
-  type        = string
-  description = "(Required) The name for the resource group container registry"
-}
-
-variable "container_registry_login_server" {
-  type        = string
-  description = "(Required) The login server for the container registry"
+variable "key_vault" {
+  type  = object({
+    id                = string
+  })
+  description = "(Optional) The name of the key vault linked to the container registry"
 }
 
 variable "container_apps" {
@@ -155,7 +157,6 @@ variable "container_apps" {
     secrets = optional(list(object({
       name                = optional(string)
       value               = optional(string)
-      identity            = optional(string)
       key_vault_secret_id = optional(string)
     })))
   }))

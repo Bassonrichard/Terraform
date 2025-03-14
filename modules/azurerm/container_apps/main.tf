@@ -11,8 +11,10 @@ module "log_analytics_workspace" {
 module "user_assigned_identity" {
   source = "../user_assigned_identity"
 
+  for_each = var.container_apps
+
   name_prefix         = var.name_prefix
-  name                = "container-apps"
+  name                = each.value.name
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -25,9 +27,23 @@ module "acr_role_assignment" {
 
   depends_on = [module.user_assigned_identity]
 
+  for_each = var.container_apps
+
   resource_scope_id         = data.azurerm_container_registry.container_registry.id
   role_definition_name      = "AcrPull"
-  user_assigned_identity_id = module.user_assigned_identity.principal_id
+  user_assigned_identity_id = module.user_assigned_identity[each.key].principal_id
+}
+
+module "key_vault_role_assignment" {
+  source = "../role_assignment"
+
+  depends_on = [module.user_assigned_identity]
+
+  for_each = var.key_vault != null && var.key_vault.id != null ? var.container_apps : {}
+
+  resource_scope_id         = var.key_vault.id
+  role_definition_name      = "Key Vault Administrator"
+  user_assigned_identity_id = module.user_assigned_identity[each.key].principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
@@ -56,11 +72,12 @@ resource "azurerm_container_app" "az_container_app" {
   revision_mode                = each.value.revision_mode
 
   identity {
-    type         = "SystemAssigned"
+    type         = "UserAssigned"
+    identity_ids =  [ module.user_assigned_identity[each.key].principal_id ]
   }
 
   registry {
-    server   = var.container_registry_login_server
+    server   = var.container_registry.login_server
     username = data.azurerm_container_registry.container_registry.admin_username
     password_secret_name = "container-registry-password"
   }
@@ -70,7 +87,7 @@ resource "azurerm_container_app" "az_container_app" {
       for_each = coalesce(each.value.template.containers, [])
       content {
         name   = container.value.name
-        image  = "${var.container_registry_name}.azurecr.io/${container.value.image}:${container.value.tag}"
+        image  = "${var.container_registry.name}.azurecr.io/${container.value.image}:${container.value.tag}"
         cpu    = container.value.cpu
         memory = container.value.memory
 
@@ -257,12 +274,10 @@ resource "azurerm_container_app" "az_container_app" {
     content {
       name                = secret.value.name
       value               = try(secret.value.value, null)
-      identity            = try(secret.value.identity, null)
+      identity            = secret.value.key_vault_secret_id != null ? module.user_assigned_identity[each.key].principal_id : null
       key_vault_secret_id = try(secret.value.key_vault_secret_id, null)
     }
   }
 
   tags = var.tags
-
-
 }
