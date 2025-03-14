@@ -255,8 +255,10 @@ resource "azurerm_container_app" "az_container_app" {
         value = data.azurerm_container_registry.container_registry.admin_password
       }])
     content {
-      name  = secret.value.name
-      value = try(secret.value.value, null)
+      name                = secret.value.name
+      value               = try(secret.value.value, null)
+      identity            = try(secret.value.identity, null)
+      key_vault_secret_id = try(secret.value.key_vault_secret_id, null)
     }
   }
 

@@ -153,8 +153,10 @@ variable "container_apps" {
       }))
     }))
     secrets = optional(list(object({
-      name  = optional(string)
-      value = optional(string)
+      name                = optional(string)
+      value               = optional(string)
+      identity            = optional(string)
+      key_vault_secret_id = optional(string)
     })))
   }))
 }
