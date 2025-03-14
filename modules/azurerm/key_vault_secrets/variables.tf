@@ -2,7 +2,7 @@ variable "secrets" {
   type        = list(object({
     name            = string
     secret           = string
-    expiration_date = Optional(string)
+    expiration_date = optional(string)
   }))
   description = "(Required) The list of secrets."
 }
