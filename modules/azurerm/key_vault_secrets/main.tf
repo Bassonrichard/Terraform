@@ -6,7 +6,7 @@ resource "azurerm_key_vault_secret" "secrets" {
   
   for_each = var.secrets
 
-  name            = each.value.name
+  name            = each.key
   value           = each.value.secret
   expiration_date = each.value.expiration_date
 
