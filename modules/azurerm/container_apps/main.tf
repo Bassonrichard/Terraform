@@ -73,7 +73,7 @@ resource "azurerm_container_app" "az_container_app" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids =  [ module.user_assigned_identity[each.key].principal_id ]
+    identity_ids =  [ module.user_assigned_identity[each.key].id ]
   }
 
   registry {
