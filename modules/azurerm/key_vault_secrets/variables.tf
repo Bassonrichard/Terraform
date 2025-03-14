@@ -1,6 +1,5 @@
 variable "secrets" {
-  type        = list(object({
-    name            = string
+  type        = map(object({
     secret           = string
     expiration_date = optional(string)
   }))
