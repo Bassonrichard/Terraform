@@ -23,13 +23,6 @@ variable "container_registry" {
    description = "(Required) The container registry details"
 }
 
-variable "key_vault" {
-  type  = object({
-    id                = string
-  })
-  description = "(Optional) The name of the key vault linked to the container registry"
-}
-
 variable "container_apps" {
   description = "(Required) Specifies the container apps in the managed environment."
   type = map(object({

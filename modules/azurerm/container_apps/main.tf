@@ -34,18 +34,6 @@ module "acr_role_assignment" {
   principal_id              = module.user_assigned_identity[each.key].principal_id
 }
 
-module "key_vault_role_assignment" {
-  source = "../role_assignment"
-
-  depends_on = [module.user_assigned_identity]
-
-  for_each = var.key_vault != null && var.key_vault.id != null ? var.container_apps : {}
-
-  resource_scope_id         = var.key_vault.id
-  role_definition_name      = "Key Vault Administrator"
-  principal_id              = module.user_assigned_identity[each.key].principal_id
-}
-
 resource "azurerm_container_app_environment" "az_container_app_environment" {
   depends_on = [module.log_analytics_workspace]
 
