@@ -78,8 +78,7 @@ resource "azurerm_container_app" "az_container_app" {
 
   registry {
     server   = var.container_registry.login_server
-    username = data.azurerm_container_registry.container_registry.admin_username
-    password_secret_name = "container-registry-password"
+    identity = module.user_assigned_identity[each.key].id
   }
 
   template {
