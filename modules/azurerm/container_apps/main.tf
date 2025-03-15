@@ -91,7 +91,10 @@ resource "azurerm_container_app" "az_container_app" {
         memory = container.value.memory
 
         dynamic "env" {
-          for_each = coalesce(container.value.env, [])
+          for_each = concat(container.value.env != null ? container.value.env : [], [{
+            name  = "Identity__ClientId"
+            value =  module.user_assigned_identity[each.key].client_id
+          }])
           content {
             name        = env.value.name
             secret_name = try(env.value.secret_name, null)
