@@ -40,7 +40,7 @@ module "key_vault_role_assignment" {
   depends_on = [module.user_assigned_identity]
 
   for_each = var.key_vault != null && var.key_vault.id != null ? var.container_apps : {}
-  
+
   resource_scope_id         = var.key_vault.id
   role_definition_name      = "Key Vault Administrator"
   principal_id              = module.user_assigned_identity[each.key].principal_id
@@ -267,10 +267,7 @@ resource "azurerm_container_app" "az_container_app" {
   }
 
  dynamic "secret" {
-    for_each = concat(each.value.secrets != null ? each.value.secrets : [], [{
-        name  = "container-registry-password"
-        value = data.azurerm_container_registry.container_registry.admin_password
-      }])
+    for_each = each.value.secrets != null ? each.value.secrets : []
     content {
       name                = secret.value.name
       value               = try(secret.value.value, null)
