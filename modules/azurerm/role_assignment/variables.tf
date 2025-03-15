@@ -8,7 +8,7 @@ variable "role_definition_name" {
     description = "The name of the role definition to assign."
 }
 
-variable "user_assigned_identity_id" {
+variable "principal_id" {
     type        = string
     description = "The ID of the user-assigned identity to assign the role to."
 }

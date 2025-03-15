@@ -31,7 +31,7 @@ module "acr_role_assignment" {
 
   resource_scope_id         = data.azurerm_container_registry.container_registry.id
   role_definition_name      = "AcrPull"
-  user_assigned_identity_id = module.user_assigned_identity[each.key].principal_id
+  principal_id              = module.user_assigned_identity[each.key].principal_id
 }
 
 module "key_vault_role_assignment" {
@@ -40,10 +40,10 @@ module "key_vault_role_assignment" {
   depends_on = [module.user_assigned_identity]
 
   for_each = var.key_vault != null && var.key_vault.id != null ? var.container_apps : {}
-
+  
   resource_scope_id         = var.key_vault.id
   role_definition_name      = "Key Vault Administrator"
-  user_assigned_identity_id = module.user_assigned_identity[each.key].principal_id
+  principal_id              = module.user_assigned_identity[each.key].principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
