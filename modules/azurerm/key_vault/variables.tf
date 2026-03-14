@@ -41,7 +41,7 @@ variable "access_policies" {
     certificate_permissions = list(string)
   }))
   description = "(Optional) List of access policies for the key vault."
-  default = []
+  default     = []
 }
 
 variable "network_acls" {
@@ -52,5 +52,5 @@ variable "network_acls" {
     virtual_network_subnet_ids = list(string)
   }))
   description = "(Optional) List of network ACL configurations for the key vault."
-  default = []
+  default     = []
 }

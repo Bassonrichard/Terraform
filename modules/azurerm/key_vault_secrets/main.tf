@@ -3,7 +3,7 @@ resource "azurerm_key_vault_secret" "secrets" {
   depends_on = [
     data.azurerm_key_vault.key_vault
   ]
-  
+
   for_each = var.secrets
 
   name            = each.key

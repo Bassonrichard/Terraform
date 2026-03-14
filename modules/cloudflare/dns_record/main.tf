@@ -9,8 +9,8 @@ resource "cloudflare_dns_record" "record" {
   content = var.record.content
   type    = var.record.type
   comment = var.record.comment
-  proxied = var.record.proxied 
-  ttl     = var.record.ttl 
+  proxied = var.record.proxied
+  ttl     = var.record.ttl
 
 
   tags = var.record.tags

@@ -20,7 +20,7 @@ variable "container_registry" {
     login_server        = string
   })
 
-   description = "(Required) The container registry details"
+  description = "(Required) The container registry details"
 }
 
 variable "container_apps" {

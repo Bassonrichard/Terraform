@@ -29,9 +29,9 @@ module "acr_role_assignment" {
 
   for_each = var.container_apps
 
-  resource_scope_id         = data.azurerm_container_registry.container_registry.id
-  role_definition_name      = "AcrPull"
-  principal_id              = module.user_assigned_identity[each.key].principal_id
+  resource_scope_id    = data.azurerm_container_registry.container_registry.id
+  role_definition_name = "AcrPull"
+  principal_id         = module.user_assigned_identity[each.key].principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
@@ -61,7 +61,7 @@ resource "azurerm_container_app" "az_container_app" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids =  [ module.user_assigned_identity[each.key].id ]
+    identity_ids = [module.user_assigned_identity[each.key].id]
   }
 
   registry {
@@ -81,7 +81,7 @@ resource "azurerm_container_app" "az_container_app" {
         dynamic "env" {
           for_each = concat(container.value.env != null ? container.value.env : [], [{
             name  = "Identity__ClientId"
-            value =  module.user_assigned_identity[each.key].client_id
+            value = module.user_assigned_identity[each.key].client_id
           }])
           content {
             name        = env.value.name
@@ -256,7 +256,7 @@ resource "azurerm_container_app" "az_container_app" {
     }
   }
 
- dynamic "secret" {
+  dynamic "secret" {
     for_each = each.value.secrets != null ? each.value.secrets : []
     content {
       name                = secret.value.name

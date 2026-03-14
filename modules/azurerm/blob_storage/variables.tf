@@ -19,7 +19,7 @@ variable "location" {
 }
 
 variable "storage_containers" {
-  type       = list(object({
+  type = list(object({
     name                  = string
     container_access_type = string
   }))

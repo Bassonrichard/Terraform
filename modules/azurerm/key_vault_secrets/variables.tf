@@ -1,6 +1,6 @@
 variable "secrets" {
-  type        = map(object({
-    secret           = string
+  type = map(object({
+    secret          = string
     expiration_date = optional(string)
   }))
   description = "(Required) The list of secrets."

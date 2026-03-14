@@ -5,7 +5,7 @@ output "database_password" {
 }
 
 output "fully_qualified_domain_name" {
-    value = azurerm_mssql_server.az_mssql_server.fully_qualified_domain_name
+  value = azurerm_mssql_server.az_mssql_server.fully_qualified_domain_name
 }
 
 output "database_name" {

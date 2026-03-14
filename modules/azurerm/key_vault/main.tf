@@ -3,18 +3,18 @@ resource "azurerm_key_vault" "az_key_vault" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  name                        = "${var.name_prefix}-${var.key_vault.name}-kv"
+  name = "${var.name_prefix}-${var.key_vault.name}-kv"
 
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  tenant_id = data.azurerm_client_config.current.tenant_id
 
   enabled_for_disk_encryption = var.key_vault.enabled_for_disk_encryption
   soft_delete_retention_days  = var.key_vault.soft_delete_retention_days
   purge_protection_enabled    = var.key_vault.purge_protection_enabled
   rbac_authorization_enabled  = var.key_vault.rbac_authorization_enabled
 
-  sku_name                    = var.key_vault.sku_name
-  
-  tags                        = var.tags
+  sku_name = var.key_vault.sku_name
+
+  tags = var.tags
 
   dynamic "access_policy" {
     for_each = var.access_policies

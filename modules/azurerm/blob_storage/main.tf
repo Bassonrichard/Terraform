@@ -3,8 +3,8 @@ locals {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name                     = local.name
-  resource_group_name      = var.resource_group_name
+  name                = local.name
+  resource_group_name = var.resource_group_name
 
   location                 = var.location
   access_tier              = "Hot"
