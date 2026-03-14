@@ -16,8 +16,13 @@ output "fqdn" {
 
 output "principal_id" {
   value = {
-    for app_name, app in var.container_apps : 
+    for app_name, app in var.container_apps :
     app_name => module.user_assigned_identity[app_name].principal_id
   }
   description = "The Principal ID of the Container App's identity."
+}
+
+output "log_analytics_workspace_id" {
+  value       = module.log_analytics_workspace.id
+  description = "The resource ID of the Log Analytics Workspace used by the Container App Environment."
 }
