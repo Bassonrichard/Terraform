@@ -155,6 +155,15 @@ variable "container_apps" {
   }))
 }
 
+variable "user_assigned_identities" {
+  description = "(Required) Map of user assigned identities keyed by container app key. Each entry must have id, principal_id, and client_id."
+  type = map(object({
+    id           = string
+    principal_id = string
+    client_id    = string
+  }))
+}
+
 variable "tags" {
   description = "(Optional) Specifies the tags of the resource"
   type        = map(any)

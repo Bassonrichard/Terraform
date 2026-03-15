@@ -16,16 +16,16 @@ output "fqdn" {
 
 output "principal_id" {
   value = {
-    for app_name, app in var.container_apps :
-    app_name => module.user_assigned_identity[app_name].principal_id
+    for app_name, identity in var.user_assigned_identities :
+    app_name => identity.principal_id
   }
   description = "The Principal ID of the Container App's identity."
 }
 
 output "client_id" {
   value = {
-    for app_name, app in var.container_apps :
-    app_name => module.user_assigned_identity[app_name].client_id 
+    for app_name, identity in var.user_assigned_identities :
+    app_name => identity.client_id
   }
   description = "The Client ID of the Container App's identity."
 }

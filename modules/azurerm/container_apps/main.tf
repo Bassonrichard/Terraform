@@ -8,30 +8,14 @@ module "log_analytics_workspace" {
   tags = var.tags
 }
 
-module "user_assigned_identity" {
-  source = "../user_assigned_identity"
-
-  for_each = var.container_apps
-
-  name_prefix         = var.name_prefix
-  name                = each.value.name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-
-  tags = var.tags
-
-}
-
 module "acr_role_assignment" {
   source = "../role_assignment"
-
-  depends_on = [module.user_assigned_identity]
 
   for_each = var.container_apps
 
   resource_scope_id    = data.azurerm_container_registry.container_registry.id
   role_definition_name = "AcrPull"
-  principal_id         = module.user_assigned_identity[each.key].principal_id
+  principal_id         = var.user_assigned_identities[each.key].principal_id
 }
 
 resource "azurerm_container_app_environment" "az_container_app_environment" {
@@ -61,12 +45,12 @@ resource "azurerm_container_app" "az_container_app" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [module.user_assigned_identity[each.key].id]
+    identity_ids = [var.user_assigned_identities[each.key].id]
   }
 
   registry {
     server   = var.container_registry.login_server
-    identity = module.user_assigned_identity[each.key].id
+    identity = var.user_assigned_identities[each.key].id
   }
 
   template {
@@ -81,7 +65,7 @@ resource "azurerm_container_app" "az_container_app" {
         dynamic "env" {
           for_each = concat(container.value.env != null ? container.value.env : [], [{
             name  = "Identity__ClientId"
-            value = module.user_assigned_identity[each.key].client_id
+            value = var.user_assigned_identities[each.key].client_id
           }])
           content {
             name        = env.value.name
@@ -261,7 +245,7 @@ resource "azurerm_container_app" "az_container_app" {
     content {
       name                = secret.value.name
       value               = try(secret.value.value, null)
-      identity            = try(secret.value.key_vault_secret_id, null) != null ? module.user_assigned_identity[each.key].id : null
+      identity            = try(secret.value.key_vault_secret_id, null) != null ? var.user_assigned_identities[each.key].id : null
       key_vault_secret_id = try(secret.value.key_vault_secret_id, null)
     }
   }
