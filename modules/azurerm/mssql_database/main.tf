@@ -20,6 +20,15 @@ resource "azurerm_mssql_server" "az_mssql_server" {
   minimum_tls_version          = var.db_server.minimum_tls_version
   administrator_login          = var.db_server.administrator_login
   administrator_login_password = random_password.password.result
+
+  dynamic "azuread_administrator" {
+    for_each = var.azuread_administrator != null ? [var.azuread_administrator] : []
+    content {
+      login_username              = azuread_administrator.value.login_username
+      object_id                   = azuread_administrator.value.object_id
+      azuread_authentication_only = azuread_administrator.value.azuread_authentication_only
+    }
+  }
 }
 
 resource "azurerm_mssql_database" "az_mssql_database" {

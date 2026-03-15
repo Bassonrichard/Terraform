@@ -29,6 +29,16 @@ variable "db_server" {
   }
 }
 
+variable "azuread_administrator" {
+  type = object({
+    login_username              = string
+    object_id                   = string
+    azuread_authentication_only = optional(bool, false)
+  })
+
+  default = null
+}
+
 variable "database" {
   type = object({
     collation            = optional(string, "SQL_Latin1_General_CP1_CI_AS")

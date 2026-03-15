@@ -15,3 +15,7 @@ output "database_name" {
 output "administrator_login" {
   value = azurerm_mssql_server.az_mssql_server.administrator_login
 }
+
+output "server_id" {
+  value = azurerm_mssql_server.az_mssql_server.id
+}
