@@ -16,7 +16,7 @@ resource "azurerm_storage_account" "storage_account" {
     for_each = var.custom_domain_name != null ? [var.custom_domain_name] : []
     content {
       name               = custom_domain.value
-      use_subdomain_name = true
+      use_subdomain = true
     }
   }
 
