@@ -25,6 +25,12 @@ variable "storage_containers" {
   }))
 }
 
+variable "custom_domain_name" {
+  type        = string
+  description = "(Optional) The custom domain name for the storage account."
+  default     = null
+}
+
 variable "tags" {
   description = "(Optional) Specifies the tags of the resource"
   type        = map(any)

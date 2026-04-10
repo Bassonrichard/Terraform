@@ -12,6 +12,13 @@ resource "azurerm_storage_account" "storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
+  dynamic "custom_domain" {
+    for_each = var.custom_domain_name != null ? [var.custom_domain_name] : []
+    content {
+      name = custom_domain.value
+    }
+  }
+
   tags = var.tags
 }
 
